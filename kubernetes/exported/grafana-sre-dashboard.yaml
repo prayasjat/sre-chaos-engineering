@@ -1,0 +1,82 @@
+apiVersion: v1
+data:
+  sre-overview.json: |
+    {
+      "annotations": {
+        "list": []
+      },
+      "editable": true,
+      "graphTooltip": 0,
+      "panels": [
+        {
+          "title": "NGINX Up",
+          "type": "stat",
+          "gridPos": {
+            "h": 5,
+            "w": 8,
+            "x": 0,
+            "y": 0
+          },
+          "targets": [
+            {
+              "expr": "up",
+              "legendFormat": "{{job}}",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "title": "CPU Usage",
+          "type": "timeseries",
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 8,
+            "y": 0
+          },
+          "targets": [
+            {
+              "expr": "100 - (avg by(instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+              "legendFormat": "CPU {{instance}}",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "title": "HTTP Request Rate",
+          "type": "timeseries",
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 8
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(nginx_http_requests_total[5m]))",
+              "legendFormat": "Requests/sec",
+              "refId": "A"
+            }
+          ]
+        }
+      ],
+      "schemaVersion": 39,
+      "tags": [
+        "sre",
+        "chaos",
+        "nginx"
+      ],
+      "title": "SRE Chaos Engineering Overview",
+      "uid": "sre-chaos-overview",
+      "version": 1
+    }
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"sre-overview.json":"{\n  \"annotations\": {\n    \"list\": []\n  },\n  \"editable\": true,\n  \"graphTooltip\": 0,\n  \"panels\": [\n    {\n      \"title\": \"NGINX Up\",\n      \"type\": \"stat\",\n      \"gridPos\": {\n        \"h\": 5,\n        \"w\": 8,\n        \"x\": 0,\n        \"y\": 0\n      },\n      \"targets\": [\n        {\n          \"expr\": \"up\",\n          \"legendFormat\": \"{{job}}\",\n          \"refId\": \"A\"\n        }\n      ]\n    },\n    {\n      \"title\": \"CPU Usage\",\n      \"type\": \"timeseries\",\n      \"gridPos\": {\n        \"h\": 8,\n        \"w\": 12,\n        \"x\": 8,\n        \"y\": 0\n      },\n      \"targets\": [\n        {\n          \"expr\": \"100 - (avg by(instance) (rate(node_cpu_seconds_total{mode=\\\"idle\\\"}[5m])) * 100)\",\n          \"legendFormat\": \"CPU {{instance}}\",\n          \"refId\": \"A\"\n        }\n      ]\n    },\n    {\n      \"title\": \"HTTP Request Rate\",\n      \"type\": \"timeseries\",\n      \"gridPos\": {\n        \"h\": 8,\n        \"w\": 12,\n        \"x\": 0,\n        \"y\": 8\n      },\n      \"targets\": [\n        {\n          \"expr\": \"sum(rate(nginx_http_requests_total[5m]))\",\n          \"legendFormat\": \"Requests/sec\",\n          \"refId\": \"A\"\n        }\n      ]\n    }\n  ],\n  \"schemaVersion\": 39,\n  \"tags\": [\n    \"sre\",\n    \"chaos\",\n    \"nginx\"\n  ],\n  \"title\": \"SRE Chaos Engineering Overview\",\n  \"uid\": \"sre-chaos-overview\",\n  \"version\": 1\n}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"grafana-sre-dashboard","namespace":"sre-demo"}}
+  creationTimestamp: "2026-09-06T20:01:20Z"
+  name: grafana-sre-dashboard
+  namespace: sre-demo
+  resourceVersion: "151939"
+  uid: 5aa8ff3c-772f-4aca-8511-92bd7aca3314
