@@ -1,0 +1,65 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIDBTCCAe2gAwIBAgIIXzhVrBmIDiIwDQYJKoZIhvcNAQELBQAwFTETMBEGA1UE
+      AxMKa3ViZXJuZXRlczAeFw0yNjA5MDUxNTI5MjFaFw0zNjA5MDIxNTM0MjFaMBUx
+      EzARBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+      AoIBAQDSTyy4DYqncs1p+PuyiVClj8Hv29rNelPjR/2fVlWGEx16L+30UPEnzebl
+      lbHE/AursT1w51ZMZCmI2P9Gkt7WUgd3FW/vhNGfjPYEMkcNl7QgphI+FrlMl11/
+      UbHwdCKDirGzMK53qTfppd+yP2AMYBJmmL/idcJpTKUQeohMvq5EPshVP9gX6g32
+      1/sk4Rw0OZSpVhgq/UiDAfLj4xJApXaer/BeZBuFQRn9XTPk6IukWKjhmzDDgWBH
+      I0qfbZt4FSKKMMOdUGa4O94JEEStTPU8s0Ux2RKdLxEOsgG3lJfPhx3LIGnR/oCW
+      LC62DgwgaKsVSw5Ls+NuYwufjDlhAgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAP
+      BgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBT65aAOSNzUNQVkG7TLAQuOoIP25jAV
+      BgNVHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQCtB3nLb8eO
+      fHpepLptm5dO+NEbuWPBNhOhCxTu2bBANB5Qg2qyjdpF4kOQW1SFxJwW4sXDJ6Dm
+      AxX1kQxa/r7R2fo3sN54EHWrxjk6dyDXoL69q1KkOfUpnpFBTmHpRQz5fUrsFQbd
+      wRteqVP29ywfFhqe1O97BcUkJ1YODF//1qKE1bHeLJyRxWZzB/rVdKCKz/Ov9zT+
+      vt5+S54Eva8xA7qjKQVQz0zA7DtvU3GQ8B6O8Yg5ZLay4LrIG4e4zk//Tp9tSn0k
+      OGqdrwyOe3gB5Whb/ju8myryoS/pUbl1ruKZVnDoFCcp8E58sl0mVBK+qbsVQB30
+      b9MCkXD1ugm4
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-09-06T16:54:05Z"
+    name: kube-root-ca.crt
+    namespace: sre-demo
+    resourceVersion: "134877"
+    uid: e04bbde3-7181-471c-810d-b18b570006a0
+- apiVersion: v1
+  data:
+    prometheus.yml: |
+      global:
+        scrape_interval: 15s
+
+      scrape_configs:
+        - job_name: prometheus
+          static_configs:
+            - targets:
+                - localhost:9090
+
+        - job_name: nginx
+          static_configs:
+            - targets:
+                - demo-nginx:9113
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"prometheus.yml":"global:\n  scrape_interval: 15s\n\nscrape_configs:\n  - job_name: prometheus\n    static_configs:\n      - targets:\n          - localhost:9090\n\n  - job_name: nginx\n    static_configs:\n      - targets:\n          - demo-nginx:9113\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"prometheus-config","namespace":"sre-demo"}}
+    creationTimestamp: "2026-09-06T17:14:03Z"
+    name: prometheus-config
+    namespace: sre-demo
+    resourceVersion: "140031"
+    uid: 9f33c4ac-a5ae-4cc4-99af-ffbea90bf154
+kind: List
+metadata:
+  resourceVersion: ""
